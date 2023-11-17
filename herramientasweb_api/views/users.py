@@ -72,7 +72,14 @@ class UsersView(generics.CreateAPIView):
             user.save()
 
             #Create a profile for the user
-            profile = Profiles.objects.create(user=user)
+            profile = Profiles.objects.create(user=user,
+                                matricula= request.data["matricula"],
+                                curp= request.data["curp"].upper(),
+                                rfc= request.data["rfc"].upper(),
+                                fecha_nacimiento= request.data["fecha_nacimiento"],
+                                edad= request.data["edad"],
+                                telefono= request.data["telefono"],
+                                ocupacion= request.data["ocupacion"])
             profile.save()
 
             return Response({"profile_created_id": profile.id }, 201)
