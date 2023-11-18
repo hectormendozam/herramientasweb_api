@@ -30,12 +30,13 @@ import string
 import random
 import json
 
-class Userme(generics.CreateAPIView):
+class UsersAll(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     def get(self, request, *args, **kwargs):
-        user = request.user
-        #TODO: Regresar perfil del usuario
-        return Response({})
+        profiles = Profiles.objects.filter(user__is_active = 1).order_by("id")
+        lista = ProfilesSerializer(profiles, many=True).data
+        
+        return Response(lista, 200)
 
 class UsersView(generics.CreateAPIView):
 
