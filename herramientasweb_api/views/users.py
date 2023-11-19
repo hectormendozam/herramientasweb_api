@@ -94,3 +94,23 @@ class UsersView(generics.CreateAPIView):
 
         return Response(user.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class UsersViewEdit(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    def put(self, request, *args, **kwargs):
+        # iduser=request.data["id"]
+        profile = get_object_or_404(Profiles, id=request.data["id"])
+        profile.fecha_nacimiento = request.data["fecha_nacimiento"]
+        profile.curp = request.data["curp"]
+        profile.rfc = request.data["rfc"]
+        profile.edad = request.data["edad"]
+        profile.telefono = request.data["telefono"]
+        profile.ocupacion = request.data["ocupacion"]
+        profile.matricula = request.data["matricula"]
+        profile.save()
+        temp = profile.user
+        temp.first_name = request.data["first_name"]
+        temp.last_name = request.data["last_name"]
+        temp.save()
+        user = ProfilesSerializer(profile, many=False).data
+
+        return Response(user,200)

@@ -26,6 +26,8 @@ urlpatterns = [
         path('users/', users.UsersView.as_view()),
     #User Data
         path('lista-users/', users.UsersAll.as_view()),
+    #Edit User
+        path('users-edit/', users.UsersViewEdit.as_view()),
     #Login
         path('token/', auth.CustomAuthToken.as_view()),
     #Logout
