@@ -25,3 +25,19 @@ class Profiles(models.Model):
 
     def __str__(self):
         return "Perfil del usuario "+self.usuario.first_name+" "+self.usuario.last_name
+
+class Materias(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    nrc = models.IntegerField(null=True, blank=True)
+    nombre_materia = models.CharField(max_length=255,null=True, blank=True)
+    seccion = models.IntegerField(null=True, blank=True)
+    dias = models.CharField(max_length=255,null=True, blank=True)
+    hora_inicio = models.TimeField(null=True, blank=True)
+    hora_final = models.TimeField(null=True, blank=True)
+    salon = models.IntegerField(null=True, blank=True)
+    programa_educativo = models.CharField(max_length=255,null=True, blank=True)
+    creation = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    update = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return "Perfil de materia "+self.materia.nrc+" "+self.materia.nombre_materia

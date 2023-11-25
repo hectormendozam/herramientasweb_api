@@ -30,11 +30,11 @@ import string
 import random
 import json
 
-class MateriaasAll(generics.CreateAPIView):
+class MateriasAll(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     def get(self, request, *args, **kwargs):
-        profiles = Profiles.objects.filter(materia__is_active = 1).order_by("id")
-        lista = ProfilesSerializer(profiles, many=True).data
+        materias = Materias.objects.order_by("id")
+        lista = MateriasSerializer(materias, many=True).data
         
         return Response(lista, 200)
 
@@ -42,83 +42,56 @@ class MateriasView(generics.CreateAPIView):
     #Obtener materia por ID
     # permission_classes = (permissions.IsAuthenticated,)
     def get(self, request, *args, **kwargs):
-        materia = get_object_or_404(Profiles, id = request.GET.get("id"))
-        materia = ProfilesSerializer(materia, many=False).data
+        materia = get_object_or_404(Materias, id = request.GET.get("id"))
+        materia = MateriasSerializer(materia, many=False).data
+
         return Response(materia, 200)
     
     #Registrar nueva materia
     @transaction.atomic
     def post(self, request, *args, **kwargs):
 
-        materia = UserSerializer(data=request.data)
+        materia = MateriasSerializer(data=request.data)
         if materia.is_valid():
-            #Grab materia data
-            role = 'user'
-            first_name = request.data['first_name']
-            last_name = request.data['last_name']
-            email = request.data['email']
-            password = request.data['password']
 
-            existing_user = User.objects.filter(email=email).first()
+            #Create a profile for the subject
+            materia = Materias.objects.create(nrc=request.data["nrc"],
+                                              nombre_materia= request.data["nombre_materia"],
+                                              seccion= request.data["seccion"],
+                                              dias= request.data["dias"],
+                                              hora_inicio= request.data["hora_inicio"],
+                                              hora_final= request.data["hora_final"],
+                                              salon= request.data["salon"],
+                                              programa_educativo= request.data["programa_educativo"])
+            materia.save()
 
-            if existing_user:
-                return Response({"message":"Username "+email+", is already taken"},400)
+            return Response({"materia_created_id": materia.id }, 201)
 
-            user = User.objects.create( username = email,
-                                        email = email,
-                                        first_name = first_name,
-                                        last_name = last_name,
-                                        is_active = 1)
-
-
-            user.save()
-            user.set_password(password)
-            user.save()
-
-            group, created = Group.objects.get_or_create(name=role)
-            group.user_set.add(user)
-            user.save()
-
-            #Create a profile for the user
-            profile = Profiles.objects.create(user=user,
-                                matricula= request.data["matricula"],
-                                curp= request.data["curp"].upper(),
-                                rfc= request.data["rfc"].upper(),
-                                fecha_nacimiento= request.data["fecha_nacimiento"],
-                                edad= request.data["edad"],
-                                telefono= request.data["telefono"],
-                                ocupacion= request.data["ocupacion"])
-            profile.save()
-
-            return Response({"profile_created_id": profile.id }, 201)
-
-        return Response(user.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(materia.errors, status=status.HTTP_400_BAD_REQUEST)
     
-class UsersViewEdit(generics.CreateAPIView):
+class MateriasViewEdit(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     def put(self, request, *args, **kwargs):
         # iduser=request.data["id"]
-        profile = get_object_or_404(Profiles, id=request.data["id"])
-        profile.fecha_nacimiento = request.data["fecha_nacimiento"]
-        profile.curp = request.data["curp"]
-        profile.rfc = request.data["rfc"]
-        profile.edad = request.data["edad"]
-        profile.telefono = request.data["telefono"]
-        profile.ocupacion = request.data["ocupacion"]
-        profile.matricula = request.data["matricula"]
-        profile.save()
-        temp = profile.user
-        temp.first_name = request.data["first_name"]
-        temp.last_name = request.data["last_name"]
-        temp.save()
-        user = ProfilesSerializer(profile, many=False).data
+        materia = get_object_or_404(Materias, id=request.data["id"])
+        materia.nrc = request.data["nrc"]
+        materia.nombre = request.data["nombre_materia"]
+        materia.seccion = request.data["seccion"]
+        materia.dias = request.data["dias"]
+        materia.horaInicio = request.data["hora_inicio"]
+        materia.horaFin = request.data["hora_final"]
+        materia.salon = request.data["salon"]
+        materia.programa = request.data["programa_educativo"]
 
-        return Response(user,200)
+        materia.save()
+        mat = MateriasSerializer(materia, many=False).data
+
+        return Response(mat,200)
     
     def delete(self, request, *args, **kwargs):
-        profile = get_object_or_404(Profiles, id=request.GET.get("id"))
+        materia = get_object_or_404(Materias, id=request.GET.get("id"))
         try:
-            profile.user.delete()
-            return Response({"details":"Usuario eliminado"},200)
+            materia.delete()
+            return Response({"details":"Materia eliminada"},200)
         except Exception as e:
             return Response({"details":"Algo pasó al eliminar"},400)
