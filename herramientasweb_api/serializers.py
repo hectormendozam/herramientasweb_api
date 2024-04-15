@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from herramientasweb_api.models import *
 
+#perfiles proyecto de yael
 class UserSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     first_name = serializers.CharField(required=True)
@@ -17,6 +18,7 @@ class ProfilesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profiles
         fields = "__all__"
+
 class ProfilesAllSerializer(serializers.ModelSerializer):
     #user=UserSerializer(read_only=True)
     class Meta:
@@ -24,6 +26,32 @@ class ProfilesAllSerializer(serializers.ModelSerializer):
         fields = '__all__'
         depth = 1
 
+#perfiles proyecto ing software II
+class PerfilSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    username = serializers.CharField(required=True)
+
+    class Meta:
+        model = Perfiles
+        fields = ('id','first_name','last_name', 'username')
+
+class PerfilesSerializer(serializers.ModelSerializer):
+    user=UserSerializer(read_only=True)
+    class Meta:
+        model = Perfiles
+        fields = "__all__"
+
+class PerfilesAllSerializer(serializers.ModelSerializer):
+    #user=UserSerializer(read_only=True)
+    class Meta:
+        model = Perfiles
+        fields = '__all__'
+        depth = 1
+
+
+#Materias
 class MatSerializer(serializers.ModelSerializer):
     nrc = serializers.IntegerField(read_only=True)
     nombre_materia = serializers.CharField(required=True)
