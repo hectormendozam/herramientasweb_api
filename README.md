@@ -136,7 +136,6 @@ Ej:
 	"utc_gmt": "-6",
 	"twilio_account_sid": "AC1bd0ba400b2d64c2e5becdf9ed2524ba",
 	"twilio_auth_token": "99f637b75c63789cadce3d4adc87a5ca",
-	"twilio_api_key": "SKad01c6e38694803bbb7e8d74d2020444",
 	"twilio_api_secret": "QxhzBRSdUBEBu3sy4CLsUydIkW7biyTW",
 	"twilio_service_sid": "ISd12c72a5a8154399b006aea6e760db28"
 }

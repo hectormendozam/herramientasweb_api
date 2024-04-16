@@ -19,6 +19,7 @@ from herramientasweb_api.views import bootstrap
 from herramientasweb_api.views import users
 from herramientasweb_api.views import auth
 from herramientasweb_api.views import materias
+from herramientasweb_api.views import contactos
 
 urlpatterns = [
     #Version
@@ -38,5 +39,11 @@ urlpatterns = [
     #MAteria Data
         path('lista-materias/', materias.MateriasAll.as_view()),
     #Edit Materia
-        path('materias-edit/', materias.MateriasViewEdit.as_view())
+        path('materias-edit/', materias.MateriasViewEdit.as_view()),
+    #Create Contacto
+        #path('materias/', materias.MateriasView.as_view()),
+    #Contacto Data
+        #path('lista-materias/', materias.MateriasAll.as_view()),
+    #Edit Contacto
+        #path('materias-edit/', materias.MateriasViewEdit.as_view())
 ]

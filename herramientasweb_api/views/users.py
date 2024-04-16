@@ -56,7 +56,7 @@ class UsersView(generics.CreateAPIView):
             role = 'user'
             first_name = request.data['first_name']
             last_name = request.data['last_name']
-            email = request.data['email']
+            email = request.data['nombreusuario']
             password = request.data['password']
 
             existing_user = User.objects.filter(email=email).first()
@@ -65,7 +65,6 @@ class UsersView(generics.CreateAPIView):
                 return Response({"message":"Username "+email+", is already taken"},400)
 
             user = User.objects.create( username = email,
-                                        email = email,
                                         first_name = first_name,
                                         last_name = last_name,
                                         is_active = 1)
@@ -81,13 +80,8 @@ class UsersView(generics.CreateAPIView):
 
             #Create a profile for the user
             profile = Profiles.objects.create(user=user,
-                                matricula= request.data["matricula"],
-                                curp= request.data["curp"].upper(),
-                                rfc= request.data["rfc"].upper(),
-                                fecha_nacimiento= request.data["fecha_nacimiento"],
-                                edad= request.data["edad"],
-                                telefono= request.data["telefono"],
-                                ocupacion= request.data["ocupacion"])
+                                id_trabajador= request.data["id_trabajador"],
+                                puesto= request.data["puesto"],)
             profile.save()
 
             return Response({"profile_created_id": profile.id }, 201)
@@ -99,13 +93,11 @@ class UsersViewEdit(generics.CreateAPIView):
     def put(self, request, *args, **kwargs):
         # iduser=request.data["id"]
         profile = get_object_or_404(Profiles, id=request.data["id"])
-        profile.fecha_nacimiento = request.data["fecha_nacimiento"]
-        profile.curp = request.data["curp"]
-        profile.rfc = request.data["rfc"]
-        profile.edad = request.data["edad"]
-        profile.telefono = request.data["telefono"]
-        profile.ocupacion = request.data["ocupacion"]
-        profile.matricula = request.data["matricula"]
+        profile.id_trabajador = request.id_trabajador["id_trabajador"]
+        profile.hora_inicio = request.data["hora_inicio"]
+        profile.hora_final = request.data["hora_final"]
+        profile.puesto = request.data["puesto"]
+        #profile.user = request.data["username"]
         profile.save()
         temp = profile.user
         temp.first_name = request.data["first_name"]
