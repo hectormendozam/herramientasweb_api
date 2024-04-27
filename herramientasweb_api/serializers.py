@@ -71,3 +71,24 @@ class MateriasAllSerializer(serializers.ModelSerializer):
         model = Materias
         fields = '__all__'
         depth = 1
+
+####Contactos####
+class ConSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    nombre_materia = serializers.CharField(required=True)
+
+    class Meta:
+        model = Contactos
+        fields = ('id','nombre_contacto')
+
+class ContactosSerializer(serializers.ModelSerializer):
+    materia=ConSerializer(read_only=True)
+    class Meta:
+        model = Contactos
+        fields = "__all__"
+class ContactosAllSerializer(serializers.ModelSerializer):
+    #user=UserSerializer(read_only=True)
+    class Meta:
+        model = Contactos
+        fields = '__all__'
+        depth = 1

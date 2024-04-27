@@ -33,7 +33,7 @@ class CustomAuthToken(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
-                                           context={'request': request})
+            context={'request': request})
 
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
@@ -54,7 +54,7 @@ class CustomAuthToken(ObtainAuthToken):
                 'id': user.pk,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
-                'nombreusuario': user.nombreusuario,
+                'nombreusuario': user.email,
                 'token': token.key,
                 'roles': role_names
 

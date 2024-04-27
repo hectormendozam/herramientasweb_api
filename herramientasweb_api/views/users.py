@@ -56,7 +56,7 @@ class UsersView(generics.CreateAPIView):
             role = 'user'
             first_name = request.data['first_name']
             last_name = request.data['last_name']
-            email = request.data['nombreusuario']
+            email = request.data['email']
             password = request.data['password']
 
             existing_user = User.objects.filter(email=email).first()

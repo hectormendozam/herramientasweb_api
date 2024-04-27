@@ -30,68 +30,68 @@ import string
 import random
 import json
 
-class MateriasAll(generics.CreateAPIView):
+class ContactosAll(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     def get(self, request, *args, **kwargs):
-        materias = Materias.objects.order_by("id")
-        lista = MateriasSerializer(materias, many=True).data
+        contactos = Contactos.objects.order_by("id")
+        lista = ContactosSerializer(contactos, many=True).data
         
         return Response(lista, 200)
 
-class MateriasView(generics.CreateAPIView):
-    #Obtener materia por ID
+class ContactosView(generics.CreateAPIView):
+    #Obtener contacto por ID
     # permission_classes = (permissions.IsAuthenticated,)
     def get(self, request, *args, **kwargs):
-        materia = get_object_or_404(Materias, id = request.GET.get("id"))
-        materia = MateriasSerializer(materia, many=False).data
+        contacto = get_object_or_404(Contactos, id = request.GET.get("id"))
+        contacto = ContactosSerializer(contacto, many=False).data
 
-        return Response(materia, 200)
+        return Response(contacto, 200)
     
-    #Registrar nueva materia
+    #Registrar nuevo contacto
     @transaction.atomic
     def post(self, request, *args, **kwargs):
 
-        materia = MateriasSerializer(data=request.data)
-        if materia.is_valid():
+        contacto = ContactosSerializer(data=request.data)
+        if contacto.is_valid():
 
             #Create a profile for the subject
-            materia = Materias.objects.create(nrc=request.data["nrc"],
-                nombre_materia= request.data["nombre_materia"],
+            contacto = Contactos.objects.create(nrc=request.data["nrc"],
+                nombre_contacto= request.data["nombre_contacto"],
                 seccion= request.data["seccion"],
                 dias= request.data["dias"],
                 hora_inicio= request.data["hora_inicio"],
                 hora_final= request.data["hora_final"],
                 salon= request.data["salon"],
                 programa_educativo= request.data["programa_educativo"])
-            materia.save()
+            contacto.save()
 
-            return Response({"materia_created_id": materia.id }, 201)
+            return Response({"contacto_created_id": contacto.id }, 201)
 
-        return Response(materia.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(contacto.errors, status=status.HTTP_400_BAD_REQUEST)
     
-class MateriasViewEdit(generics.CreateAPIView):
+class contactosViewEdit(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     def put(self, request, *args, **kwargs):
         # iduser=request.data["id"]
-        materia = get_object_or_404(Materias, id=request.data["id"])
-        materia.nrc = request.data["nrc"]
-        materia.nombre = request.data["nombre_materia"]
-        materia.seccion = request.data["seccion"]
-        materia.dias = request.data["dias"]
-        materia.horaInicio = request.data["hora_inicio"]
-        materia.horaFin = request.data["hora_final"]
-        materia.salon = request.data["salon"]
-        materia.programa = request.data["programa_educativo"]
+        contacto = get_object_or_404(Contactos, id=request.data["id"])
+        contacto.nrc = request.data["nrc"]
+        contacto.nombre = request.data["nombre_contacto"]
+        contacto.seccion = request.data["seccion"]
+        contacto.dias = request.data["dias"]
+        contacto.horaInicio = request.data["hora_inicio"]
+        contacto.horaFin = request.data["hora_final"]
+        contacto.salon = request.data["salon"]
+        contacto.programa = request.data["programa_educativo"]
 
-        materia.save()
-        mat = MateriasSerializer(materia, many=False).data
+        contacto.save()
+        con = ContactosSerializer(contacto, many=False).data
 
-        return Response(mat,200)
+        return Response(con,200)
     
     def delete(self, request, *args, **kwargs):
-        materia = get_object_or_404(Materias, id=request.GET.get("id"))
+        contacto = get_object_or_404(Contactos, id=request.GET.get("id"))
         try:
-            materia.delete()
-            return Response({"details":"Materia eliminada"},200)
+            contacto.delete()
+            return Response({"details":"Contacto eliminado"},200)
         except Exception as e:
             return Response({"details":"Algo pasó al eliminar"},400)
