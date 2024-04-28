@@ -55,14 +55,12 @@ class ContactosView(generics.CreateAPIView):
         if contacto.is_valid():
 
             #Create a profile for the subject
-            contacto = Contactos.objects.create(nrc=request.data["nrc"],
-                nombre_contacto= request.data["nombre_contacto"],
-                seccion= request.data["seccion"],
-                dias= request.data["dias"],
-                hora_inicio= request.data["hora_inicio"],
-                hora_final= request.data["hora_final"],
-                salon= request.data["salon"],
-                programa_educativo= request.data["programa_educativo"])
+            contacto = Contactos.objects.create(nombre_empresa= request.data["nombre_empresa"],
+                giro= request.data["giro"],
+                direccion_postal= request.data["direccion_postal"],
+                representante_legal= request.data["representante_legal"],
+                telefono= request.data["telefono"],
+                correo_electronico= request.data["correo_electronico"])
             contacto.save()
 
             return Response({"contacto_created_id": contacto.id }, 201)
@@ -74,14 +72,12 @@ class contactosViewEdit(generics.CreateAPIView):
     def put(self, request, *args, **kwargs):
         # iduser=request.data["id"]
         contacto = get_object_or_404(Contactos, id=request.data["id"])
-        contacto.nrc = request.data["nrc"]
-        contacto.nombre = request.data["nombre_contacto"]
-        contacto.seccion = request.data["seccion"]
-        contacto.dias = request.data["dias"]
-        contacto.horaInicio = request.data["hora_inicio"]
-        contacto.horaFin = request.data["hora_final"]
-        contacto.salon = request.data["salon"]
-        contacto.programa = request.data["programa_educativo"]
+        contacto.nombre_empresa = request.data["nombre_empresa"]
+        contacto.giro = request.data["giro"]
+        contacto.direccion_postal = request.data["direccion_postal"]
+        contacto.representante_legal = request.data["representante_legal"]
+        contacto.telefono = request.data["telefono"]
+        contacto.correo_electronico = request.data["correo_electronico"]
 
         contacto.save()
         con = ContactosSerializer(contacto, many=False).data

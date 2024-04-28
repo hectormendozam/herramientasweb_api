@@ -75,11 +75,11 @@ class MateriasAllSerializer(serializers.ModelSerializer):
 ####Contactos####
 class ConSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    nombre_materia = serializers.CharField(required=True)
+    nombre_empresa = serializers.CharField(required=True)
 
     class Meta:
         model = Contactos
-        fields = ('id','nombre_contacto')
+        fields = ('id','nombre_empresa')
 
 class ContactosSerializer(serializers.ModelSerializer):
     materia=ConSerializer(read_only=True)
