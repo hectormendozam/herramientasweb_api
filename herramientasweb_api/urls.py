@@ -40,6 +40,12 @@ urlpatterns = [
         path('lista-materias/', materias.MateriasAll.as_view()),
     #Edit Materia
         path('materias-edit/', materias.MateriasViewEdit.as_view()),
+    #Create Contactos empresariales
+        path('contactos/', contactosemp.ContactosView.as_view()),
+    #Contactos empresariales Data
+        path('lista-contactos/', contactosemp.ContactosAll.as_view()),
+     #Edit User
+        path('contactos-edit/', contactosemp.contactosViewEdit.as_view()),
     #Create Contacto
         #path('materias/', materias.MateriasView.as_view()),
     #Contacto Data
