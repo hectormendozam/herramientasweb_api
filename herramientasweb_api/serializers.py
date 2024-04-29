@@ -78,7 +78,7 @@ class ConSerializer(serializers.ModelSerializer):
     nombre_empresa = serializers.CharField(required=True)
 
     class Meta:
-        model = Contactos
+        model = ContactosEmp
         fields = ('id','nombre_empresa')
 
 class ContactosSerializer(serializers.ModelSerializer):

@@ -55,7 +55,7 @@ class ContactosView(generics.CreateAPIView):
         if contacto.is_valid():
 
             #Create a profile for the subject
-            contacto = Contactos.objects.create(nombre_empresa= request.data["nombre_empresa"],
+            contacto = ContactosEmp.objects.create(nombre_empresa= request.data["nombre_empresa"],
                 giro= request.data["giro"],
                 direccion_postal= request.data["direccion_postal"],
                 representante_legal= request.data["representante_legal"],
@@ -71,7 +71,7 @@ class contactosViewEdit(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     def put(self, request, *args, **kwargs):
         # iduser=request.data["id"]
-        contacto = get_object_or_404(Contactos, id=request.data["id"])
+        contacto = get_object_or_404(ContactosEmp, id=request.data["id"])
         contacto.nombre_empresa = request.data["nombre_empresa"]
         contacto.giro = request.data["giro"]
         contacto.direccion_postal = request.data["direccion_postal"]
