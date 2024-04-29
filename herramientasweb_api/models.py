@@ -52,7 +52,7 @@ class Materias(models.Model):
     def __str__(self):
         return "Perfil de materia "+self.materia.nrc+" "+self.materia.nombre_materia
     
-class Contactos(models.Model):
+class ContactosEmp(models.Model):
     id = models.BigAutoField(primary_key=True)
     nrc = models.IntegerField(null=True, blank=True)
     nombre_materia = models.CharField(max_length=255,null=True, blank=True)

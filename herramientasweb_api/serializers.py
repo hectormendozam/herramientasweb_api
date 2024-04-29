@@ -78,17 +78,17 @@ class ConSerializer(serializers.ModelSerializer):
     nombre_materia = serializers.CharField(required=True)
 
     class Meta:
-        model = Contactos
+        model = ContactosEmp
         fields = ('id','nombre_contacto')
 
 class ContactosSerializer(serializers.ModelSerializer):
-    materia=ConSerializer(read_only=True)
+    contacto=ConSerializer(read_only=True)
     class Meta:
-        model = Contactos
+        model = ContactosEmp
         fields = "__all__"
 class ContactosAllSerializer(serializers.ModelSerializer):
     #user=UserSerializer(read_only=True)
     class Meta:
-        model = Contactos
+        model = ContactosEmp
         fields = '__all__'
         depth = 1

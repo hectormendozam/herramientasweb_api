@@ -33,7 +33,7 @@ import json
 class ContactosAll(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     def get(self, request, *args, **kwargs):
-        contactos = Contactos.objects.order_by("id")
+        contactos = ContactosEmp.objects.order_by("id")
         lista = ContactosSerializer(contactos, many=True).data
         
         return Response(lista, 200)
@@ -42,7 +42,7 @@ class ContactosView(generics.CreateAPIView):
     #Obtener contacto por ID
     # permission_classes = (permissions.IsAuthenticated,)
     def get(self, request, *args, **kwargs):
-        contacto = get_object_or_404(Contactos, id = request.GET.get("id"))
+        contacto = get_object_or_404(ContactosEmp, id = request.GET.get("id"))
         contacto = ContactosSerializer(contacto, many=False).data
 
         return Response(contacto, 200)
@@ -55,7 +55,7 @@ class ContactosView(generics.CreateAPIView):
         if contacto.is_valid():
 
             #Create a profile for the subject
-            contacto = Contactos.objects.create(nrc=request.data["nrc"],
+            contacto = ContactosEmp.objects.create(nrc=request.data["nrc"],
                 nombre_contacto= request.data["nombre_contacto"],
                 seccion= request.data["seccion"],
                 dias= request.data["dias"],
@@ -73,7 +73,7 @@ class contactosViewEdit(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     def put(self, request, *args, **kwargs):
         # iduser=request.data["id"]
-        contacto = get_object_or_404(Contactos, id=request.data["id"])
+        contacto = get_object_or_404(ContactosEmp, id=request.data["id"])
         contacto.nrc = request.data["nrc"]
         contacto.nombre = request.data["nombre_contacto"]
         contacto.seccion = request.data["seccion"]
@@ -89,7 +89,7 @@ class contactosViewEdit(generics.CreateAPIView):
         return Response(con,200)
     
     def delete(self, request, *args, **kwargs):
-        contacto = get_object_or_404(Contactos, id=request.GET.get("id"))
+        contacto = get_object_or_404(ContactosEmp, id=request.GET.get("id"))
         try:
             contacto.delete()
             return Response({"details":"Contacto eliminado"},200)
