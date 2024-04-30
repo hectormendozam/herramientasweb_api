@@ -44,7 +44,7 @@ urlpatterns = [
         path('contactos/', contactosemp.ContactosView.as_view()),
     #Contactos empresariales Data
         path('lista-contactos/', contactosemp.ContactosAll.as_view()),
-     #Edit User
+     #Edit Contacto empresarial
         path('contactos-edit/', contactosemp.contactosViewEdit.as_view()),
     #Create Contacto
         #path('materias/', materias.MateriasView.as_view()),

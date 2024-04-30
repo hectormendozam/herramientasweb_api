@@ -67,6 +67,8 @@ class ContactosView(generics.CreateAPIView):
 
         return Response(contacto.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
+#Función de editar
 class contactosViewEdit(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     def put(self, request, *args, **kwargs):
