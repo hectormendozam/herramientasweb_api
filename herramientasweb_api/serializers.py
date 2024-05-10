@@ -92,3 +92,24 @@ class ContactosAllSerializer(serializers.ModelSerializer):
         model = Contactos
         fields = '__all__'
         depth = 1
+
+#Contactos personales
+class ContacSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    nombre_contacto = serializers.CharField(required=True)
+
+    class Meta:
+        model = Contactop
+        fields = ('id','nombre_contacto')
+
+class ContactopSerializer(serializers.ModelSerializer):
+    materia=ConSerializer(read_only=True)
+    class Meta:
+        model = Contactop
+        fields = "__all__"
+class ContactopAllSerializer(serializers.ModelSerializer):
+    #user=UserSerializer(read_only=True)
+    class Meta:
+        model = Contactop
+        fields = '__all__'
+        depth = 1

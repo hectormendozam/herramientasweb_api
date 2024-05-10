@@ -20,6 +20,7 @@ from herramientasweb_api.views import users
 from herramientasweb_api.views import auth
 from herramientasweb_api.views import materias
 from herramientasweb_api.views import contactosemp
+from herramientasweb_api.views import contactop
 
 urlpatterns = [
     #Version
@@ -44,8 +45,14 @@ urlpatterns = [
         path('contactos/', contactosemp.ContactosView.as_view()),
     #Contactos empresariales Data
         path('lista-contactos/', contactosemp.ContactosAll.as_view()),
-     #Edit Contacto empresarial
+    #Edit Contacto empresarial
         path('contactos-edit/', contactosemp.contactosViewEdit.as_view()),
+    #Create Contactos empresariales
+        path('contactop/', contactop.ContactopView.as_view()),
+     #Contactos empresariales Data
+        path('lista-contactop/', contactop.ContactopAll.as_view()),
+    #Edit Contacto empresarial
+        path('contactop-edit/', contactop.contactopViewEdit.as_view()),
     #Create Contacto
         #path('materias/', materias.MateriasView.as_view()),
     #Contacto Data
