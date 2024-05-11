@@ -21,6 +21,7 @@ from herramientasweb_api.views import auth
 from herramientasweb_api.views import materias
 from herramientasweb_api.views import contactosemp
 from herramientasweb_api.views import contactop
+from herramientasweb_api.views import cita
 
 urlpatterns = [
     #Version
@@ -53,6 +54,12 @@ urlpatterns = [
         path('lista-contactop/', contactop.ContactopAll.as_view()),
     #Edit Contacto empresarial
         path('contactop-edit/', contactop.contactopViewEdit.as_view()),
+    #Create Citas
+        path('cita/', cita.CitaView.as_view()),
+     #Citas Data
+        path('lista-cita/', cita.CitaAll.as_view()),
+    #Edit Cita
+        path('cita-edit/', cita.citaViewEdit.as_view()),
     #Create Contacto
         #path('materias/', materias.MateriasView.as_view()),
     #Contacto Data
