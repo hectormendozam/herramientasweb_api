@@ -65,3 +65,31 @@ class ContactosEmp(models.Model):
 
     def __str__(self):
         return "Perfil de contacto empresarial "+self.contacto.nombre_empresa+" "+self.contacto.giro
+    
+class Contactop(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    nombre_contacto = models.CharField(max_length=255,null=True, blank=True)
+    direccion_postal = models.IntegerField(null=True, blank=True)
+    correo_electronico = models.CharField(max_length=255,null=True, blank=True)
+    telefono_particular = models.CharField(max_length=255,null=True, blank=True)
+    telefono_celular = models.CharField(max_length=255,null=True, blank=True)
+    parentesco = models.CharField(max_length=255,null=True, blank=True)
+    creation = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    update = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return "Perfil de contacto personal "+self.contacto_p.nombre_contacto+" "+self.contacto_p.direccion_postal
+    
+class Cita(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    nombre_persona = models.CharField(max_length=255,null=True, blank=True)
+    fecha = models.CharField(max_length=255,null=True, blank=True)
+    hora_inicio = models.CharField(max_length=255,null=True, blank=True)
+    hora_fin = models.CharField(max_length=255,null=True, blank=True)
+    lugar = models.CharField(max_length=255,null=True, blank=True)
+    asunto = models.CharField(max_length=255,null=True, blank=True)
+    creation = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    update = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return "Perfil de cita "+self.citas.nombre_persona+" "+self.citas.fecha

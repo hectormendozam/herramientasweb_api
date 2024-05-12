@@ -92,3 +92,46 @@ class ContactosAllSerializer(serializers.ModelSerializer):
         model = ContactosEmp
         fields = '__all__'
         depth = 1
+
+#Contactos personales
+class ContacSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    nombre_contacto = serializers.CharField(required=True)
+
+    class Meta:
+        model = Contactop
+        fields = ('id','nombre_contacto')
+
+class ContactopSerializer(serializers.ModelSerializer):
+    materia=ConSerializer(read_only=True)
+    class Meta:
+        model = Contactop
+        fields = "__all__"
+class ContactopAllSerializer(serializers.ModelSerializer):
+    #user=UserSerializer(read_only=True)
+    class Meta:
+        model = Contactop
+        fields = '__all__'
+        depth = 1
+
+#Citas
+class CitSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    nombre_persona = serializers.CharField(required=True)
+
+    class Meta:
+        model = Cita
+        fields = ('id','nombre_persona')
+
+class CitaSerializer(serializers.ModelSerializer):
+    materia=ConSerializer(read_only=True)
+    class Meta:
+        model = Cita
+        fields = "__all__"
+        
+class CitaAllSerializer(serializers.ModelSerializer):
+    #user=UserSerializer(read_only=True)
+    class Meta:
+        model = Cita
+        fields = '__all__'
+        depth = 1
